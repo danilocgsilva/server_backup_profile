@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## version
-VERSION="1.0.0"
+VERSION="1.0.1"
 
 ## The base path of all recorded profiles
 return_profile_folder () {
@@ -65,8 +65,10 @@ write_entry_to_profile_path () {
 make_download () {
   load_variables_from_file
   full_local_backup_path=$local_path_download'/'$(date +%Y%m%d-%Hh%Mm%Ss)
-  mkdir $full_local_backup_path
-  scp $(select_pem_path_parameter) -rv $user_name@$server_address:/$application_server_path $full_local_backup_path 
+  full_local_backup_path_tmp=$full_local_backup_path'-downloading...'
+  mkdir $full_local_backup_path_tmp
+  scp $(select_pem_path_parameter) -rv $user_name@$server_address:/$application_server_path $full_local_backup_path_tmp
+  mv $full_local_backup_path_tmp $full_local_backup_path
 }
 
 ##
