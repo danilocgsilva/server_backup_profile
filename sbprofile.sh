@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## version
-VERSION="1.0.1"
+VERSION="1.0.2"
 
 ## The base path of all recorded profiles
 return_profile_folder () {
@@ -69,6 +69,7 @@ make_download () {
   mkdir $full_local_backup_path_tmp
   scp $(select_pem_path_parameter) -rv $user_name@$server_address:/$application_server_path $full_local_backup_path_tmp
   mv $full_local_backup_path_tmp $full_local_backup_path
+  echo The $profile_name has been downloaded successfully!
 }
 
 ##
