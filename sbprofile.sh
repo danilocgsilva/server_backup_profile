@@ -29,7 +29,31 @@ create_profile_file () {
     mkdir -p $profile_folder
   fi
 
-  touch $full_file_path
+  local full_pem_file_path
+
+  read -p "Enter the server name: " server_name
+  read -p "Enter the user name: " user_name
+  read -p "Enter the full pem file path, if any: " full_pem_file_path
+  read -p "Enter the server path to your application: " application_server_path
+
+  write_entry_to_profile_path server_name
+  write_entry_to_profile_path user_name
+  write_entry_to_profile_path full_pem_file_path
+  write_entry_to_profile_path application_server_path
+
+  make_download $profile_name
+}
+
+ask_variable () {
+  read -p "$1" $2
+  echo ${!2}
+}
+
+write_entry_to_profile_path () {
+  if [ ! -z $1 ]
+  then
+    echo $1:${!1} >> $full_file_path
+  fi
 }
 
 make_download () {
@@ -46,7 +70,7 @@ sbprofile () {
   full_file_path=$profile_folder'/'$profile_name
   if [ $(check_if_profile_exists $full_file_path) = 1 ]
   then
-    make_download
+    make_download $profile_name
   else
     create_profile_file
   fi
