@@ -24,16 +24,12 @@ check_if_profile_exists () {
 
 create_profile_file () {
 
-  echo I may create the $profile_folder
-
-  if [ -f $profile_folder ]
+  if [ ! -f $profile_folder ]
   then
     mkdir -p $profile_folder
   fi
 
   touch $full_file_path
-
-  echo The profile file has been created
 }
 
 make_download () {
